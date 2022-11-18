@@ -19,6 +19,10 @@ public class Superhero {
         this.world = world;
     }
 
+    public Superhero() {
+
+    }
+
     public int getId() {
         return id;
     }
