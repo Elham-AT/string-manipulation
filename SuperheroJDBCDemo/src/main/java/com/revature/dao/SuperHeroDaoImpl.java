@@ -3,10 +3,7 @@ package com.revature.dao;
 import com.revature.model.Superhero;
 import com.revature.util.ConnectionFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,7 +20,7 @@ public class SuperHeroDaoImpl implements SuperHeroDao{
         // Use prepared statement to prevent SQL injection
         String sql = "insert into superhero values(default, ?, ?, ?, ?, ?, ?);";
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, superhero.getSuperhero_name());
             preparedStatement.setString(2, superhero.getSuper_power());
             preparedStatement.setInt(3, superhero.getStrength());
@@ -32,10 +29,12 @@ public class SuperHeroDaoImpl implements SuperHeroDao{
             preparedStatement.setString(6, superhero.getWorld());
 
             // this will actually execute the statement
-            int count = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
-            // if count is 1, that means success, we've updated the table:
-            if(count == 1) {
+            // Alter the save method so that it retrieves the id from the database and store it in the superhero object that you return
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            if(rs.next()) {
+                superhero.setId(rs.getInt("id"));
                 return superhero;
             }
         } catch (SQLException e) {
@@ -150,5 +149,66 @@ public class SuperHeroDaoImpl implements SuperHeroDao{
     }
 
     // Make some more fun queries like get by power, strength, etc.
-    // Alter the save method so that it retrieves the id from the database and store it in the superhero object that you return (Recommend doing online research)
+    public Superhero findByPower(String power) {
+        try(Connection conn = ConnectionFactory.getConnectionFactory().getConnection()){
+            String sql = "select * from superhero where super_Power = ? ";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, power);
+
+            ResultSet rs = ps.executeQuery();
+
+            if(!rs.next()){
+                return null;
+            }
+
+            Superhero superhero = new Superhero();
+
+            superhero.setSuperhero_name(rs.getString("superhero_name"));
+            superhero.setSuper_power(rs.getString("super_power"));
+            superhero.setStrength(rs.getInt("strength"));
+            superhero.setWeakness(rs.getString("weakness"));
+            superhero.setFranchise(rs.getString("franchise"));
+            superhero.setWorld(rs.getString("world"));
+
+
+            return superhero;
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Superhero findByStrength(String strength) {
+        try(Connection conn = ConnectionFactory.getConnectionFactory().getConnection()){
+            String sql = "select * from superhero where strength = ? ";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, strength);
+
+            ResultSet rs = ps.executeQuery();
+
+            if(!rs.next()){
+                return null;
+            }
+
+            Superhero superhero = new Superhero();
+
+            superhero.setSuperhero_name(rs.getString("superhero_name"));
+            superhero.setSuper_power(rs.getString("super_power"));
+            superhero.setStrength(rs.getInt("strength"));
+            superhero.setWeakness(rs.getString("weakness"));
+            superhero.setFranchise(rs.getString("franchise"));
+            superhero.setWorld(rs.getString("world"));
+
+
+            return superhero;
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
