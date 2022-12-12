@@ -9,7 +9,11 @@ import com.revature.util.DaoFactory;
 public class SuperheroService {
     private SuperHeroDao superHeroDao;
 
+<<<<<<< HEAD
     // pass in a particular implementation of the superhero dao:
+=======
+    // pass in a particular implementation of the super hero dao:
+>>>>>>> e838a1f8d35847d0dbc00e95eba8cc984428675b
     public SuperheroService(SuperHeroDao superHeroDao) {
         // do the creation of the dao:
         this.superHeroDao = superHeroDao;
@@ -23,4 +27,8 @@ public class SuperheroService {
     }
 
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e838a1f8d35847d0dbc00e95eba8cc984428675b

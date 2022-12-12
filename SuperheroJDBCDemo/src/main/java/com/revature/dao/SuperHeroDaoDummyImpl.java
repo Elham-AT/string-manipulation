@@ -2,7 +2,9 @@ package com.revature.dao;
 
 import com.revature.model.Superhero;
 
+
 import java.util.List;
+
 
 public class SuperHeroDaoDummyImpl implements SuperHeroDao {
 
@@ -12,6 +14,7 @@ public class SuperHeroDaoDummyImpl implements SuperHeroDao {
         superhero.setId(45);
         return superhero;
     }
+
 
     @Override
     public List<Superhero> findAll() {
@@ -33,3 +36,6 @@ public class SuperHeroDaoDummyImpl implements SuperHeroDao {
         return false;
     }
 }
+
+}
+

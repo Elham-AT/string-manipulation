@@ -25,4 +25,8 @@ public class DaoFactory {
         return superHeroDaoDummy;
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e838a1f8d35847d0dbc00e95eba8cc984428675b

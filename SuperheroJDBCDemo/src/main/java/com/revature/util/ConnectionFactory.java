@@ -21,6 +21,7 @@ public class ConnectionFactory {
         }
     }
 
+<<<<<<< HEAD
     static { // static block, just runs everything inside the {} (block) at class loading
         try{
             Class.forName("org.postgresql.Driver");
@@ -40,6 +41,22 @@ public class ConnectionFactory {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+=======
+    // we need one public method that returns the connection:
+    public static Connection getConnection() {
+        if(connection == null) {
+            // Resource Bundle:
+            ResourceBundle bundle = ResourceBundle.getBundle("DbConfig");
+            // create the connection:
+            String url = bundle.getString("url");
+            String user = bundle.getString("username");
+            String password = bundle.getString("password");
+            try {
+                connection = DriverManager.getConnection(url, user, password);
+            } catch(SQLException exception) {
+                exception.printStackTrace();
+            }
+>>>>>>> e838a1f8d35847d0dbc00e95eba8cc984428675b
         }
     }
 }
